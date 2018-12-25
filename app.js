@@ -22,6 +22,17 @@ const port = process.env.PORT;
 
 app.set('socketio', io);
 
+app.set('view engine', 'ejs');
+
+app.use(express.static(__dirname + "/public"));
+
+//routes
+const app_index_route = require('./routes/app/index');
+      
+app.use('/', app_index_route);
+
+
+
 //Express Middleware
 app.use(morgan('dev'));
 app.use(bodyParser.json());
@@ -41,4 +52,5 @@ app.start = app.listen = function(){
 
 app.start(process.env.PORT, () => {
     console.log('homebase V1 has started')
+    console.log('accu: ' + process.env.accu_weather_key)
 })
