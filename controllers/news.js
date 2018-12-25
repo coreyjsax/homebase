@@ -27,6 +27,3 @@ exports.get_cnn_headlines = () => {
     })
 }
 
-exports.main = function(params){
-    
-}
