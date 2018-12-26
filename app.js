@@ -31,8 +31,6 @@ const app_index_route = require('./routes/app/index');
       
 app.use('/', app_index_route);
 
-
-
 //Express Middleware
 app.use(morgan('dev'));
 app.use(bodyParser.json());

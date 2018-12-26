@@ -17,8 +17,10 @@ const five_day_weather = `http://api.openweathermap.org/data/2.5/forecast?zip=55
 const accu_w_1_day = `http://dataservice.accuweather.com/forecasts/v1/daily/1day/${process.env.accu_city}?apikey=${process.env.accu_weather_key}`;
 // fetch("http://dataservice.accuweather.com/forecasts/v1/daily/1day/locationKey?apikey=ZAtQDwqJ4396GTCM2dUAjJDBqYdEtA0t")
 const accu_w_5_day = 'http://dataservice.accuweather.com/forecasts/v1/daily/5day/' + process.env.accu_city + '?apikey=' + process.env.accu_weather_key;
-
+const accu_current = 'http://dataservice.accuweather.com/currentconditions/v1/' + process.env.accu_city + '?apikey=' + process.env.accu_weather_key;
 const alerts = 'http://dataservice.accuweather.com/alerts/v1/' + process.env.accu_city + '?apikey=' + process.env.accu_weather_key;
+const astrological = 'https://api.sunrise-sunset.org/json?lat=36.7201600&lng=-4.4203400&formatted=1'
+
 
 exports.getWeather = () => {
      return request(five_day_weather)
@@ -40,7 +42,8 @@ exports.getAccuWeather_1Day = () => {
     })
 }
    
-exports.getAccuWeather_5Day = () => {
+exports.getAccuWeather_5Day = (lat, lng) => {
+    console.log(lat + lng)
     return request({
         url: accu_w_5_day,
         cacheKey: accu_w_5_day,
@@ -65,4 +68,22 @@ exports.getNationalWeatherSvc = () => {
     })
 }
 
-exports
+exports.getCurrentConditions = () => {
+    return request(accu_current)
+    .then((res) => {
+        let data = JSON.parse(res);
+        return data;
+    }).catch((error) => {
+        return error;
+    })
+}
+
+exports.sunRiseSunSet = (lat, lng) => {
+    return request(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&formatted=0`)
+    .then((res) => {
+        let data = JSON.parse(res);
+        return data;
+    }).catch((error) => {
+        return error;
+    })
+}

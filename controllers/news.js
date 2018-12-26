@@ -20,7 +20,6 @@ exports.get_cnn_headlines = () => {
     return request(cnn_headines)
     .then((res) => {
         let headlines = JSON.parse(res);
-        console.log(headlines)
         return headlines;
     }).catch((error) => {
         return error;
